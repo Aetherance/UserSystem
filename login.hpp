@@ -5,6 +5,10 @@
 #include<cpp_redis/cpp_redis>
 #include<string>
 #include<time.h>
+#include<chrono>
+
+#define VERIFY_CODE_LIFE_TIME 5
+
 using namespace Json;
 using namespace std;
 
@@ -32,14 +36,15 @@ private:
 class codeTimer
 {
 public:
-    codeTimer();
-    ~codeTimer();
-    void removeCode(cpp_redis::client&,string);
-private:
+    codeTimer(cpp_redis::client&,string);
 };
 
-inline void codeTimer::removeCode(cpp_redis::client& database,string emall) {
-    database.hdel(base_verify_code,{emall});
+inline codeTimer::codeTimer(cpp_redis::client& database,string emall) {
+    thread([&database,emall]() {
+        this_thread::sleep_for(chrono::minutes(VERIFY_CODE_LIFE_TIME));
+        database.hdel(base_verify_code,{emall});
+        database.sync_commit();
+    }).detach();
 }
 
 #endif

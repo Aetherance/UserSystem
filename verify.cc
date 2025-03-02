@@ -12,8 +12,9 @@ string Users::vCodeGenerate() {
 void Users::CodetoDatabase(string code,string emall) {
     database.hset(base_verify_code,emall,code);
     database.sync_commit();
+    codeTimer(database,emall);
 }
 
 void Users::CodetoEmall(string) {
-
+    
 }
