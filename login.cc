@@ -37,6 +37,22 @@ bool Users::login(string user_name,string passwd) {
     }
 }
 
-Users::~Users() {
+void Users::cancle(string user_name) {
+    auto isExist = database.hexists(base_all_users,user_name);
+    database.sync_commit();
+    auto isExist_reply = isExist.get();
+    if(!isExist_reply.is_integer() || !isExist_reply.as_integer()) {
+        return;
+    }
+    database.hdel(base_all_users,{user_name});
+    database.sync_commit();
+}
 
+void Users::verification(string user_name,string passwd,string emall) {
+    
+
+}
+
+Users::~Users() {
+    database.disconnect();
 }
