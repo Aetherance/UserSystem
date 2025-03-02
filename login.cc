@@ -49,7 +49,9 @@ void Users::cancle(string user_name) {
 }
 
 void Users::verification(string user_name,string passwd,string emall) {
-    
+    string code = vCodeGenerate();
+    CodetoDatabase(code,emall);
+    CodetoEmall(code,emall);
 
 }
 

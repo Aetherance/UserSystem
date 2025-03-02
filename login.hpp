@@ -3,9 +3,11 @@
 
 #include<jsoncpp/json/json.h>
 #include<cpp_redis/cpp_redis>
+#include<curl/curl.h>
 #include<string>
 #include<time.h>
 #include<chrono>
+#include<cstdio>
 
 #define VERIFY_CODE_LIFE_TIME 5
 
@@ -26,7 +28,8 @@ public:
     void verification(string,string,string);
     string vCodeGenerate();
     void CodetoDatabase(string,string);
-    void CodetoEmall(string);
+    void CodetoEmall(string,string);
+    void sendEmall(string&,string&);
 
 private:
     cpp_redis::client database;
