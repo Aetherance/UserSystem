@@ -4,15 +4,21 @@ Users::Users(string ip,unsigned int port) {
     database.connect(ip,port);
 }
 
-void Users::regist(string user_name,string passwd) {
+bool Users::regist(string user_name,string email,string passwd) {
+    if(!verification(user_name,email)) {
+        return false;
+    }
+
     Value new_user;
     new_user["user_name"] = user_name;
     new_user["passwd"] = passwd;
+    new_user["email"] = email;
     StreamWriterBuilder writer;
     string new_user_str = writeString(writer,new_user);
 
     database.hset(base_all_users,user_name,new_user_str);
     database.sync_commit();
+    return true;
 }
 
 bool Users::login(string user_name,string passwd) {
@@ -48,11 +54,21 @@ void Users::cancle(string user_name) {
     database.sync_commit();
 }
 
-void Users::verification(string user_name,string passwd,string emall) {
+bool Users::verification(string user_name,string emall) {
     string code = vCodeGenerate();
     CodetoDatabase(code,emall);
     CodetoEmall(code,emall);
+    
+    string input_code = getUserVcode(emall);
+    if(input_code == code) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
+string Users::getUserVcode(string) {
+    return "sasa";
 }
 
 Users::~Users() {

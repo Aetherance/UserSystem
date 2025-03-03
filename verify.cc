@@ -20,10 +20,10 @@ void Users::CodetoEmall(string code,string email) {
 }
 
 size_t payload_source(void *ptr, size_t size, size_t nmemb, void *userp) {
-    std::string *payload = static_cast<std::string*>(userp);
+    string *payload = static_cast<string*>(userp);
     if (payload->empty()) return 0;
     
-    size_t copy_size = std::min(size * nmemb, payload->size());
+    size_t copy_size = min(size * nmemb, payload->size());
     memcpy(ptr, payload->data(), copy_size);
     
     *payload = payload->substr(copy_size);

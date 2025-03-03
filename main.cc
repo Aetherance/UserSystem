@@ -1,12 +1,11 @@
 #include<iostream>
 #include"login.hpp"
-using namespace std;
 #include<unistd.h>
-int main() {
-    Users user("localhost",6379);
-    user.verification("zbchi","12345","2085163736@qq.com");
+using namespace std;
 
-    // sleep(15);
+
+int main() {
+    
 
     return 0;
 }

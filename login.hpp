@@ -22,14 +22,15 @@ class Users
 public:
     Users(string,unsigned int);
     ~Users();
-    void regist(string,string);
+    bool regist(string user_name,string email,string passwd);
     bool login(string,string);
     void cancle(string);
-    void verification(string,string,string);
+    bool verification(string,string);
     string vCodeGenerate();
     void CodetoDatabase(string,string);
     void CodetoEmall(string,string);
     void sendEmall(string&,string&);
+    string getUserVcode(string);
 
 private:
     cpp_redis::client database;
